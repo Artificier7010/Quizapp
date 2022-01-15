@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@300&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Advent Pro', sans-serif;
+}
+html,body{
+    width: 100vw;
+    height: 100vh;
+}
+.main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main .left{
+    width: calc(100% - 400px);
+    position: relative;
+    height: 100%;
+    border-right: 5px solid rgb(43, 43, 43);
+}
+.left .header{
+    width: 100%;
+    height: 80px;
+    background: rgb(43, 43, 43);
+}
+.left .foot{
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    background:rgb(43, 43, 43) ;
+    bottom: 0;
+    left: 0;
+}
+.main .right{
+    width: 400px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.right .upper{
+    width: calc(100%);
+    height: calc(100% / 3);
+    background: rgba(245, 245, 245, 0.87);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.right .midd{
+    width: calc(100%);
+    height: calc(100% / 3);
+    background: rgba(245, 245, 245, 0.87);
+}
+.right .lower{
+    width: calc(100%);
+    height: calc(100% / 3);
+    background: rgba(245, 245, 245, 0.87);
+}
+.upper .details{
+    width: 100%;
+    padding: 15px;
+}
+.upper .btns{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5px;
+}
+.upper .btns button{
+    width: 150px;
+    height: 35px;
+    border: 1px solid rgba(224, 224, 224, 0.911);
+    border-radius: 3px;
+    background: black;
+    color: white;
+    font-size: larger;
+    font-weight: 900;
+
+}
+.midd .btns-cont{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px;
+    align-items: center;
+}
+.btns-cont .row{
+    width: 100%;
+    height: calc(100% / 4);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+}
+.btns-cont button{
+    width: 50px;
+    height: 50px;
+    border-radius: 3px;
+    background: black;
+    font-size: larger;
+    font-weight: 900;
+    color: aliceblue;
+}
+.lower .lower-btns{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.lower .lower-btns button{
+    width: 150px;
+    height: 35px;
+    border: 1px solid rgba(224, 224, 224, 0.911);
+    border-radius: 3px;
+    background: rgba(255, 78, 78, 0.87);
+    color: white;
+    font-size: larger;
+    font-weight: 900;
+}
+
+/* Question.php CSS */
+/* ################### */
+
+.dyquestion{
+    color: rgb(0, 0, 0);
+    padding: 20px;
+    width: 100%;
+    height: 78vh;
+    
+}
