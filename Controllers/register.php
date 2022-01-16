@@ -9,12 +9,13 @@
 
 
     $rollNo=$_POST['rollno'];
+    $cllg=$_POST['cllg'];
     $email=$_POST['regemail'];
     $password=$_POST['regpass'];
     $role = filter_input(INPUT_POST, 'role', FILTER_SANITIZE_STRING);
 
     $sql="INSERT INTO register VALUES(
-       NULL ,'$rollNo','$email','$password','$role'
+       NULL ,'$rollNo','$cllg','$email','$password','$role'
     )";
 
     if(mysqli_query($conn,$sql)){

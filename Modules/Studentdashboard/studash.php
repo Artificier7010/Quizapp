@@ -1,8 +1,32 @@
 <?php
+include '../../db_conn.php';
 session_start();
+$conn = OpenCon();
 
 $fetched=$_SESSION['sessnid'];
-$fet=$_SESSION['user'];
+$username=$_SESSION['user'];
+
+$cllg="";
+$email="";
+$role="";
+$roletoshow="";
+
+
+// Fetching User Details
+
+$sql1="SELECT * FROM register WHERE rollno='$username'";
+$rs1 = mysqli_query($conn, $sql1);
+if ($row1 = mysqli_fetch_array($rs1)) {
+    $cllg=$row1['college'];
+    $email=$row1['email'];
+    $role=$row1['role'];
+    if($role=='stu'){
+        $roletoshow="Student";
+    }else{
+        $roletoshow="N/A";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +35,8 @@ $fet=$_SESSION['user'];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stu.css">
+    <link rel="stylesheet" href="student.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <title>Document</title>
 
 </head>
@@ -21,15 +46,47 @@ $fet=$_SESSION['user'];
         <div class="left">
             <div class="header">
                 <h1 style="color:aliceblue">HTML</h1>
+                <div class="user-details">
+                    <h2>  <?php echo $username ?> </h2>
+                    <div class="card">
+                        <button id="userbtn"><i class="fas fa-user-check"></i></button> 
+                        <div class="innercard">
+                            <div class="inner-row">
+                                <h3>Username:- <?php echo $username ?></h3>
+                            </div>
+                            <div class="inner-row">
+                                <h3>College:- <?php echo $cllg ?></h3>
+                            </div>
+                            <div class="inner-row">
+                                <h3>Email:- <?php echo $email ?></h3>
+                            </div>
+                            <div class="inner-row">
+                                <h3>Role:- <?php echo $roletoshow ?></h3>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div class="dyquestion" id="dyquestion" style="color:white;"></div>
+            <div class="dyquestion" id="dyquestion"></div>
+            <div class="btns">
+            <button id="btnpre"><i class="fas fa-backward"></i>&nbsp; Previous</button>
+            <button id="sub"><i class="fas fa-check"></i>&nbsp;Submit</button>
+            <button id="finish" >Finish Exam</button>
+            <button id="btnnext"><i class="fas fa-forward"></i>&nbsp;Next</button>
+
+            </div>
             <div class="foot"></div>
         </div>
-        <div class="right">
+        <!-- <div class="right">
             <div class="upper">
                 <div class="details">
-                    <h2>Username:-<?php echo $fet ?></h2>
-                    <h2>Email:-<?php echo $fetched ?></h2>
+                    <h2>Username:-
+                    </h2>
+                    <h2>Email:-
+                    </h2>
                     <h2>Subject:-HTML</h2>
                     <h2>Date:-2/01/2022</h2>
                 </div>
@@ -72,77 +129,38 @@ $fet=$_SESSION['user'];
             </div>
 
 
-        </div>
+        </div> -->
     </div>
-
-    <!-- <section class="back" id="back">
-        <div class="backinner">
-            <div class="backpopup">
-                <div id="questionbtns" class="questionbtns">
-                    <div class="bar"></div>
-                    <div id="btttn" class="btttn">
-                        <button value="1" class="x"  >Q.1</button>
-                        <button value="2" class="x"  >Q.2</button>
-                        <button value="3" class="x"  >Q.3</button>
-                        <button value="4" class="x"  >Q.4</button>
-                        <button value="5" class="x"  >Q.5</button>
-                        <button value="6" class="x"  >Q.6</button>
-                        <button value="7" class="x"  >Q.7</button>
-                        <button value="8" class="x"  >Q.8</button>
-                        <button value="9" class="x"  >Q.9</button>
-                        <button value="10" class="x"  >Q.10</button>
-                    </div>
-                </div>
-                
-                   <div class="dyquestion" id="dyquestion" style="color:white;"></div>
-
-                
-               
-                <div class="detail">
-                    <h1 id="topc">Html </h1>
-                    <div  class="timer">
-                        <i class="far fa-clock"></i>
-                        <span id="ten-countdown">10:00</span>
-
-                    </div>
-                </div>
-                
-            </div>
-            <div class="row">
-        <div class="btns">
-                    <button id="btnpre">Previous</button>
-                    <button id="sub">Submit</button>
-                    <button id="btnnext" >Next</button>
-                    <button id="finish" >Finish Exam</button>
-                    <div id="score" class="score">
-                        <div class="scorebar"></div>
-                        <h1 id="scor"></h1>
-                    </div>
-                </div>
-        </div>
-
-        </div>
-
-    </section>  -->
     <script src="../../jquery-3.6.0.js"></script>
     <script>
         $(function() {
-            alert("bfjhxdzvfdsvufsv")
 
             let qid = 0;
             $("#finish").hide();
             $("#btnpre").show();
             $("#btnnext").show();
             $("#sub").show();
+            $(".innercard").hide()
 
-            $(".x").click(()=>{
-                alert("cxzvfuhvfudz");
+            // $(".x").click(()=>{
+            //     alert("cxzvfuhvfudz");
+            // })
+
+            $("#userbtn").click(()=>{
+                $(".innercard").toggle();
             })
+
+
+            $.post("question.php", {
+                    k: 1
+                }, function(data) {
+                    $(".dyquestion").html(data);
+                    qid=1;
+                });
 
 
 
             // $(".x").click(function() {
-            //     alert("Clicked");
             //     let x = $(this).val();
             //     qid = x;
 
@@ -156,15 +174,12 @@ $fet=$_SESSION['user'];
 
             // next button
             $("#btnnext").click(function() {
-
                 qid++;
-                if (qid <= 10) {
+                if (qid <= 10){
                     $.post("question.php", {
                         k: qid
                     }, function(data) {
-
                         $(".dyquestion").html(data);
-
                     });
                 }
             })
@@ -196,7 +211,7 @@ $fet=$_SESSION['user'];
                             ans: card_type,
                             k: qid
                         }, function(data) {
-                            return null;
+                            alert(data);
                         });
                     }
                 } else if (qid > 10) {
@@ -217,7 +232,6 @@ $fet=$_SESSION['user'];
                 }
             })
             $("#finish").click(function() {
-
                 window.location = "answercheck.php";
             })
 

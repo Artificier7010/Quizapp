@@ -1,8 +1,8 @@
 <?php
 include '../../db_conn.php';
-$conn = OpenCon();
 session_start();
 $sesnid=$_SESSION['sessnid'];
+$conn = OpenCon();
 
 
 
@@ -29,7 +29,7 @@ $qid=$_POST['k'];
       echo "error=".mysqli_error($conn);
   }
 
-  mysqli_close($connect);
+
 
 
 
@@ -39,8 +39,8 @@ $qid=$_POST['k'];
 
 
 <?php
-     $ans=$_POST['ans'];
-     $sql3="INSERT INTO answer VALUES(
+     echo $ans=$_POST['ans'];
+     echo $sql3="INSERT INTO answer VALUES(
       NULL,'$qid','$ans','$sesnid'
     )";
     

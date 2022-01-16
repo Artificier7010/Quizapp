@@ -85,6 +85,13 @@ $conn = OpenCon();
                         </div>
                     </div>
                     <div class="row">
+                        <label for="cllg">College Name</label><br>
+                        <div class="inputcont">
+                        <i class="fas fa-university"></i>
+                            <input required type="text" placeholder="Ex:- CSIT" id="cllg" name="cllg">
+                        </div>
+                    </div>
+                    <div class="row">
                         <label for="email">E-Mail</label><br>
                         <div class="inputcont">
                             <i class="fas fa-lock"></i>
