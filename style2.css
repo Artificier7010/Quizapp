@@ -17,9 +17,9 @@ html,body{
     align-items: center;
 }
 .main .left{
-    width: 400px;
+    width: 1000px;
     height: 100%;
-    background: url(Assets/1641014496330.gif);
+    background:black;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -29,7 +29,7 @@ html,body{
     margin: 10px 10px;
 }
 .main .right{
-    width: calc(100% - 400px);
+    width: calc(100% - 1000px);
     height: 100%;
     background: rgba(245, 245, 245, 0.815);
     display: flex;

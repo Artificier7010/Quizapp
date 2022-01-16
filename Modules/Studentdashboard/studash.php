@@ -3,27 +3,28 @@ include '../../db_conn.php';
 session_start();
 $conn = OpenCon();
 
-$fetched=$_SESSION['sessnid'];
-$username=$_SESSION['user'];
+$fetched = $_SESSION['sessnid'];
+$username = $_SESSION['user'];
 
-$cllg="";
-$email="";
-$role="";
-$roletoshow="";
+$cllg = "";
+$email = "";
+$role = "";
+$roletoshow = "";
+$phpvar="360"; 
 
 
 // Fetching User Details
 
-$sql1="SELECT * FROM register WHERE rollno='$username'";
+$sql1 = "SELECT * FROM register WHERE rollno='$username'";
 $rs1 = mysqli_query($conn, $sql1);
 if ($row1 = mysqli_fetch_array($rs1)) {
-    $cllg=$row1['college'];
-    $email=$row1['email'];
-    $role=$row1['role'];
-    if($role=='stu'){
-        $roletoshow="Student";
-    }else{
-        $roletoshow="N/A";
+    $cllg = $row1['college'];
+    $email = $row1['email'];
+    $role = $row1['role'];
+    if ($role == 'stu') {
+        $roletoshow = "Student";
+    } else {
+        $roletoshow = "N/A";
     }
 }
 
@@ -47,9 +48,9 @@ if ($row1 = mysqli_fetch_array($rs1)) {
             <div class="header">
                 <h1 style="color:aliceblue">HTML</h1>
                 <div class="user-details">
-                    <h2>  <?php echo $username ?> </h2>
+                    <h2> <?php echo $username ?> </h2>
                     <div class="card">
-                        <button id="userbtn"><i class="fas fa-user-check"></i></button> 
+                        <button id="userbtn"><i class="fas fa-user-check"></i></button>
                         <div class="innercard">
                             <div class="inner-row">
                                 <h3>Username:- <?php echo $username ?></h3>
@@ -72,13 +73,16 @@ if ($row1 = mysqli_fetch_array($rs1)) {
             </div>
             <div class="dyquestion" id="dyquestion"></div>
             <div class="btns">
-            <button id="btnpre"><i class="fas fa-backward"></i>&nbsp; Previous</button>
-            <button id="sub"><i class="fas fa-check"></i>&nbsp;Submit</button>
-            <button id="finish" >Finish Exam</button>
-            <button id="btnnext"><i class="fas fa-forward"></i>&nbsp;Next</button>
+                <button id="btnpre"><i class="fas fa-backward"></i>&nbsp; Previous</button>
+                <button id="sub"><i class="fas fa-check"></i>&nbsp;Submit</button>
+                <button id="finish">Finish Exam</button>
+                <button id="btnnext"><i class="fas fa-forward"></i>&nbsp;Next</button>
 
             </div>
-            <div class="foot"></div>
+            <div class="foot">
+                  <div id="status"style="font-size:30px;color:white;"></div>
+
+            </div>
         </div>
         <!-- <div class="right">
             <div class="upper">
@@ -134,6 +138,7 @@ if ($row1 = mysqli_fetch_array($rs1)) {
     <script src="../../jquery-3.6.0.js"></script>
     <script>
         $(function() {
+            countDown(<?php echo $phpvar; ?>,"status");
 
             let qid = 0;
             $("#finish").hide();
@@ -146,17 +151,17 @@ if ($row1 = mysqli_fetch_array($rs1)) {
             //     alert("cxzvfuhvfudz");
             // })
 
-            $("#userbtn").click(()=>{
+            $("#userbtn").click(() => {
                 $(".innercard").toggle();
             })
 
 
             $.post("question.php", {
-                    k: 1
-                }, function(data) {
-                    $(".dyquestion").html(data);
-                    qid=1;
-                });
+                k: 1
+            }, function(data) {
+                $(".dyquestion").html(data);
+                qid = 1;
+            });
 
 
 
@@ -175,7 +180,7 @@ if ($row1 = mysqli_fetch_array($rs1)) {
             // next button
             $("#btnnext").click(function() {
                 qid++;
-                if (qid <= 10){
+                if (qid <= 10) {
                     $.post("question.php", {
                         k: qid
                     }, function(data) {
@@ -238,6 +243,31 @@ if ($row1 = mysqli_fetch_array($rs1)) {
 
 
         })
+    </script>
+
+
+
+    <!-- Timer Code -->
+    <script type="text/javascript">
+        function countDown(secs, elem) {
+
+            var element = document.getElementById(elem);
+
+            element.innerHTML = "Timer: " + secs + " seconds";
+
+            if (secs < 1) {
+
+                clearTimeout(timer);
+                window.location = "answercheck.php";
+
+                element.innerHTML = '<h2>Ended</h2>';
+            }
+
+            secs--;
+
+            var timer = setTimeout('countDown(' + secs + ',"' + elem + '")', 1000);
+
+        }
     </script>
 </body>
 
