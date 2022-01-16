@@ -1,441 +1,394 @@
+<!-- category insertion  -->
 <?php
-session_start();
+include '../../db_conn.php';
 
-if(isset($_SESSION['user'])==false){
-  echo '<script type="text/JavaScript"> 
-            window.location="index.php";
-            alert("login failed");
-            </script>';
-}
-?>
-<?php
+// session_start();
 
-  echo '<script type="text/javascript">
-showtoast();
+// $connect =mysqli_connect("localhost","id17345460_artificiers","Av@300303318014","id17345460_registration");
+$connect = OpenCon();
 
+// if (isset($_POST['cate'])) {
+
+//   $cate1 = $_POST['cate'];
+
+//   $sql = "INSERT INTO category VALUES(NULL,'$cate1')";
 
 
-function showtoast()
-{
+//   $rs = mysqli_query($connect, $sql);
 
-
-
-var x = document.getElementById("toast");
-x.className = "show";
-setTimeout(function(){ x.className = x.className.replace("show", "");
-
-
-}, 5000);
-}
-
-
-</script>';
-
-
+//   if ($rs) {
+//     echo "<script type='text/javascript'>alert('worked')</script>";
+//   }
+// }
 
 
 ?>
+
+<!-- user detail data -->
+
+<?php
+
+$sql2 = "SELECT * FROM register ";
+
+$anss = mysqli_query($connect, $sql2);
+
+?>
+
+<!-- No. of Users -->
+<?php
+
+$nou = "SELECT COUNT(*) FROM register";
+$nor = mysqli_query($connect, $nou);
+$rownum = mysqli_fetch_array($nor);
+$total = $rownum[0];
+?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    
-    <title>Document</title>
-    <style>
-      a:link, a:visited {
-  background-color: #f44336;
-  color: white;
-  padding: 14px 25px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
-
-a:hover, a:active {
-  background-color: red;
-}
-  
-input[type=text], select {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-input[type=submit] {
-  width: 100%;
-  background-color: #4CAF50;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-input[type=submit]:hover {
-  background-color: #45a049;
-}
-.button-37 {
-  background-color: #13aa52;
-  border: 1px solid #13aa52;
-  border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
-  box-sizing: border-box;
-  color: #fff;
-  cursor: pointer;
-  font-family: "Akzidenz Grotesk BQ Medium", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  outline: none;
-  outline: 0;
-  padding: 10px 25px;
-  text-align: center;
-  transform: translateY(0);
-  transition: transform 150ms, box-shadow 150ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-}
-
-.button-37:hover {
-  box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
-  transform: translateY(-2px);
-}
-
-@media (min-width: 768px) {
-  .button-37 {
-    padding: 10px 30px;
-  }
-}
-.button-64 {
-  align-items: center;
-  background-image: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
-  border: 0;
-  border-radius: 8px;
-  box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
-  box-sizing: border-box;
-  color: #FFFFFF;
-  display: flex;
-  font-family: Phantomsans, sans-serif;
-  font-size: 20px;
-  justify-content: center;
-  line-height: 1em;
-  max-width: 100%;
-  min-width: 100%px;
-  padding: 3px;
-  text-decoration: none;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.button-64:active,
-.button-64:hover {
-  outline: 0;
-}
-
-.button-64 span {
-  background-color: rgb(5, 6, 45);
-  padding: 16px 24px;
-  border-radius: 6px;
-  width: 100%;
-  height: 100%;
-  transition: 300ms;
-}
-
-.button-64:hover span {
-  background: none;
-}
-
-@media (min-width: 768px) {
-  .button-64 {
-    font-size: 24px;
-    min-width: 196px;
-  }
-}
-
-div {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-        #snackbar {
-  visibility: hidden; /* Hidden by default. Visible on click */
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: #7ef25e; /* Black background color */
-  color: black; /* White text color */
-  text-align: center; /* Centered text */
-  border-radius: 5px; /* Rounded borders */
-  padding: 16px; /* Padding */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 1; /* Add a z-index if needed */
-  left: 50%; /* Center the snackbar */
-  bottom: 30px; /* 30px from the bottom */
-  font-weight: 500;
-}
-        #snackbar1 {
-  visibility: hidden; /* Hidden by default. Visible on click */
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: #7ef25e; /* Black background color */
-  color: black; /* White text color */
-  text-align: center; /* Centered text */
-  border-radius: 5px; /* Rounded borders */
-  padding: 16px; /* Padding */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 1; /* Add a z-index if needed */
-  left: 50%; /* Center the snackbar */
-  bottom: 30px; /* 30px from the bottom */
-  font-weight: 500;
-}
-
-/* Show the snackbar when clicking on a button (class added with JavaScript) */
-#snackbar.show {
-  visibility: visible; /* Show the snackbar */
-  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-  However, delay the fade out process for 2.5 seconds */
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-#snackbar1.show {
-  visibility: visible; /* Show the snackbar */
-  /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
-  However, delay the fade out process for 2.5 seconds */
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-
-/* Animations to fade the snackbar in and out */
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
-
-@keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
-
-/* Toaster Styling */
-/* ************************** */
-
-
-#toast {
-    visibility: hidden;
-    max-width: 50px;
-    height: 50px;
-    /*margin-left: -125px;*/
-    margin: auto;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 2px;
-
-    position: fixed;
-    z-index: 1;
-    left: 0;right:0;
-    bottom: 30px;
-    font-size: 17px;
-    white-space: nowrap;
-}
-#toast #img{
-	width: 50px;
-	height: 50px;
-    
-    float: left;
-    
-    padding-top: 16px;
-    padding-bottom: 16px;
-    
-    box-sizing: border-box;
-
-    
-    background-color: #111;
-    color: #fff;
-}
-#toast #desc{
-
-    
-    color: #fff;
-    background-color: #111;
-   
-    padding: 16px;
-    
-    overflow: hidden;
-	white-space: nowrap;
-}
-
-#toast.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 2s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, expand 0.5s 0.5s,stay 3s 1s, shrink 0.5s 4s, fadeout 0.5s 4.5s;
-}
-
-@-webkit-keyframes fadein {
-    from {bottom: 0; opacity: 0;} 
-    to {bottom: 30px; opacity: 1;}
-}
-
-@keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
-}
-
-@-webkit-keyframes expand {
-    from {min-width: 50px} 
-    to {min-width: 350px}
-}
-
-@keyframes expand {
-    from {min-width: 50px}
-    to {min-width: 350px}
-}
-@-webkit-keyframes stay {
-    from {min-width: 350px} 
-    to {min-width: 350px}
-}
-
-@keyframes stay {
-    from {min-width: 350px}
-    to {min-width: 350px}
-}
-@-webkit-keyframes shrink {
-    from {min-width: 350px;} 
-    to {min-width: 50px;}
-}
-
-@keyframes shrink {
-    from {min-width: 350px;} 
-    to {min-width: 50px;}
-}
-
-@-webkit-keyframes fadeout {
-    from {bottom: 30px; opacity: 1;} 
-    to {bottom: 60px; opacity: 0;}
-}
-
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 60px; opacity: 0;}
-}
-
-    </style>
+  <meta charset="UTF-8">
+  <!--<title> Responsive Sidebar Menu  | CodingLab </title>-->
+  <link rel="stylesheet" href="style.css">
+  <!-- Boxicons CDN Link -->
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="fac.css">
 </head>
+
 <body>
 
-<!-- toaster  -->
-<!-- ************************************* -->
+
+  <!-- sidebar  -->
+  <!-- *************************** -->
 
 
-<div id='toast'><div id='img'><i class='far fa-trash-alt'></i></div><div id='desc'>Login Successful</div></div>
+  <div class="sidebar">
+    <div class="logo-details">
+      <img src="../../Assets/darkbglogo.png" alt="" id="wislogo">
+      <div class="logo_name">Wiscore</div>
+      <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav-list">
+      <!-- <li>
+        <a id="dash" href="#">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+        <span class="tooltip">Dashboard</span>
+      </li> -->
+      <!-- <li>
+        <a id="categ" href="#">
+          <i class="fas fa-list-ol"></i>
+          <span class="links_name">Attendence</span>
+        </a>
+        <span class="tooltip">Attendence</span>
+      </li> -->
+      <li>
+        <a id="usr" href="#">
+          <i class='bx bx-user'></i>
+          <span class="links_name">Users</span>
+        </a>
+        <span class="tooltip">Users</span>
+      </li>
+      <li>
+        <a id="rslt" href="#">
+          <i class='bx bx-chat'></i>
+          <span class="links_name">Question Add</span>
+        </a>
+        <span class="tooltip">Question Add</span>
+      </li>
+      <!-- <li>
+        <a id="shedul" href="#">
+          <i class='bx bx-pie-chart-alt-2'></i>
+          <span class="links_name">Schedule</span>
+        </a>
+        <span class="tooltip">Schedule</span>
+      </li> -->
+      <!-- <li class="profile">
+        <div class="profile-details">
+          <div class="name_job">
+            <div class="name"><?php echo $facultyname ?></div>
+            <div class="job">Faculty</div>
+          </div>
+        </div>
+        <a href="../../logout.php"><i class='bx bx-log-out' id="log_out"></i></a>
+      </li> -->
+    </ul>
+  </div>
+  <section class="home-section">
 
 
-<!-- add question  -->
-<div id="addques">
-<h1>Add Question</h1>
-  <form method="POST">
-    <label for="fname">Question</label>
-    <input type="text" id="fname" name="question" placeholder="Your name..">
 
-    <label for="lname">Option 1</label>
-    <input type="text" id="lname" name="opt1" placeholder="Your last name..">
-    <label for="lname">Option 2</label>
-    <input type="text" id="lname" name="opt2" placeholder="Your last name..">
-    <label for="lname">Option 3</label>
-    <input type="text" id="lname" name="opt3" placeholder="Your last name..">
-    <label for="lname">Option 4</label>
-    <input type="text" id="lname" name="opt4" placeholder="Your last name..">
-    <label for="lname">Answer</label>
-    <input type="text" id="lname" name="answer" placeholder="Your last name..">
-  
-    <input type="submit" id="subbtn" name="submit" value="Submit">
-  </form>
-</div>
-<br>
 
-<button class="button-37" id="btnlog" role="button">Logout</button>
 
+
+
+
+
+
+    <!-- User Details -->
+    <!-- ************************* -->
+    <div class="userdetail">
+      <div class="container">
+        <h1>User Details</h1>
+        <hr>
+        <br>
+        <table id="customers">
+          <thead>
+            <th>S No.</th>
+            <th>User ID/Roll No.</th>
+            <th>College</th>
+            <th>Email</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+
+            <?php
+            $sno = 1;
+            while ($userrow = mysqli_fetch_array($anss)) {
+              // echo '<script type="text/javascript">
+              // window.location="dash.php";
+              // </script>';
+              if ($userrow) {
+
+
+
+                echo "<tr>";
+                echo '<td data-label="Id">' . $sno . '</td>';
+                echo '<td data-label="User ID">' . $userrow["rollno"] . '</td>';
+                echo '<td data-label="Branch">' . $userrow["college"] . '</td>';
+                echo '<td data-label="Mobile No.">' . $userrow["email"] . '</td>';
+                echo '<td data-label="Action"><button class="button button3 x">Delete</button></td>';
+
+
+                echo "</tr>";
+                $sno++;
+              } else if ($userrow['id'] == NULL) {
+                echo "<tr>";
+                echo '<td colspan="8" style="text-align:center;">No Users</td>';
+                echo "</tr>";
+              }
+            }
+            ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+    <!-- Question add -->
+    <!-- **************************************** -->
+
+    <div class="userresult">
+      <div class="container">
+        <h1>Add Quiz</h1>
+        <hr>
+        <br>
+        <form method="POST">
+          <div class="mb-3">
+            <label for="qtitle" class="form-label">Quiz Title</label>
+            <input type="text" name="qtitle" class="form-control" id="qtitle" placeholder="Quiz Title">
+          </div>
+          <div class="mb-3">
+            <label for="noq" class="form-label">Number of question</label>
+            <input type="number" name="noq" class="form-control" id="noq" placeholder="Eg: 10">
+          </div>
+          <div class="mb-3">
+            <label for="lang" class="form-label">Language</label>
+            <select name="lang" id="lang" class="form-select" aria-label="Language">
+              <option disabled selected>Select</option>
+              <option value="eng">English</option>
+              <option value="hin">Hindi</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="sub" class="form-label">Subject</label>
+            <input type="text" name="sub" class="form-control" id="sub" placeholder="Eg: Java">
+          </div>
+          <div class="mb-3">
+            <label for="subcd" class="form-label">Subject Code</label>
+            <input type="text" name="subcd" class="form-control" id="subcd" placeholder="Eg: Java01">
+          </div>
+          <div class="mb-3">
+            <label for="timedur" class="form-label">Time Duration(In seconds)</label>
+            <input type="number" name="timedur" class="form-control" id="timedur" placeholder="Eg: 360">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     
-    <div id='snackbar'>LOGIN SUCCESSFULL !!!!!</div>
-    <div id='snackbar1'>Question Added Successfully</div>
 
-    <?php
+      </div>
+    </div>
 
-    if(isset($_POST['submit'])){
-        // $conn =mysqli_connect("localhost","id17345460_artificiers","Av@300303318014","id17345460_registration");
-        $conn =mysqli_connect("localhost","root","","registration");
-    
-    if($conn === false){
-        die("error could not connect".mysqli_connect_error());
+
+
+  </section>
+  <div class="delmsg"></div>
+  <script>
+    let sidebar = document.querySelector(".sidebar");
+    let closeBtn = document.querySelector("#btn");
+    let searchBtn = document.querySelector(".bx-search");
+
+    closeBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+      menuBtnChange(); //calling the function(optional)
+    });
+
+    // following are the code to change sidebar button(optional)
+    function menuBtnChange() {
+      if (sidebar.classList.contains("open")) {
+        closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+      } else {
+        closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+      }
     }
+  </script>
+
+  <script src="../../jquery-3.6.0.js"></script>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+  <script>
+    $(document).ready(function() {
+
+      // hiding elements
+      // ************************
 
 
-    $question=$_POST['question'];
-    $opt1=$_POST['opt1'];
-    $opt2=$_POST['opt2'];
-    $opt3=$_POST['opt3'];
-    $opt4=$_POST['opt4'];
-    $answer=$_POST['answer'];
+      $(".userdetail").show();
+      $(".userresult").hide();
 
-    $sql3="INSERT INTO questiontab VALUES(
-      NULL,'$question','$opt1','$opt2','$opt3','$opt4','$answer'
-    )";
 
-    if(mysqli_query($conn,$sql3)){
-        echo '<script type="text/JavaScript"> 
-        var x = document.getElementById("snackbar1");
-        var y = document.getElementById("addques");
 
-        //Add the "show" class to DIV
-        x.className = "show";
+      // Navigating through different sections
+      // ******************************
 
-        // After 3 seconds, remove the show class from DIV
-        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        </script>'
-   ;
-    }else{
-        echo "error=".mysqli_error($conn);
-    }
+      $('#dash').click(function() {
 
-    mysqli_close($conn);
+        $(".addcat").hide();
+        $(".userdetail").hide();
+        $(".userresult").hide();
+        $(".schedule").hide();
+        $(".dashbord").show();
+      })
 
-    }
-    ?>
-    
+      $('#categ').click(function() {
 
-<script src="jquery-3.6.0.js"></script>
-<script>
-  $("#btnlog").click(function(){
-    window.location="logout.php";
-  })
-</script>
- 
- 
+        $(".addcat").fadeIn(200);
+        $(".userdetail").hide();
+        $(".userresult").hide();
+        $(".schedule").hide();
+        $(".dashbord").hide();
+      })
+
+
+      $('#usr').click(function() {
+
+        $(".addcat").hide();
+        $(".userdetail").fadeIn(200);
+        $(".userresult").hide();
+        $(".schedule").hide();
+        $(".dashbord").hide();
+
+      })
+
+
+      $('#rslt').click(function() {
+
+        $(".addcat").hide();
+        $(".userdetail").hide();
+        $(".userresult").fadeIn(200);
+        $(".schedule").hide();
+        $(".dashbord").hide();
+
+      })
+
+      $('#shedul').click(function() {
+
+        $(".addcat").hide();
+        $(".userdetail").hide();
+        $(".userresult").hide();
+        $(".schedule").fadeIn(200);
+        $(".dashbord").hide();
+
+      })
+
+
+
+
+
+      // Deleting User Details
+      // ***************************
+
+      $(".x").click(function() {
+        let userid = $(this).closest('tr').find("td:nth-child(2)").text();
+        $(this).closest('tr').hide(200);
+        alert(userid);
+        $.post("../../Controllers/del.php", {
+          uid: userid
+
+        }, function(data) {
+          $(".delmsg").html(data);
+          // alert(data);
+        });
+
+
+      });
+    });
+
+    //
+  </script>
+
+
 </body>
+
 </html>
-<!-- HTML !-->
+
+                   <!-- Add quiz  -->
+<!-- ******************************************** -->
+
+<?php
+
+if(isset($_POST["qtitle"]))
+{
+  $qtitle = $_POST["qtitle"];
+  $noq = $_POST["noq"];
+  $lang = filter_input(INPUT_POST, "lang" , FILTER_SANITIZE_STRING);
+  $sub = $_POST["sub"];
+  $subcd = $_POST["subcd"];
+  $timedur = $_POST["timedur"];
 
 
+  $sql3 = "INSERT INTO quizes VALUES( NULL , '$qtitle', '$noq','$lang',' $sub',' $subcd','$timedur')";
 
+  $rs3 = mysqli_query($connect , $sql3);
+  if($rs3)
+  {
+    echo "
+    <script type='text/javascript'>
+
+    let cnf = confirm('Do you want to add question?');
+    if(cnf==true)
+    {
+      window.location.href= 'addques.php';
+    }else{
+      alert('Quiz Added Successfully!!!!!!')
+    }
+
+    
+    </script>
+    ";
+
+  }
+
+}
+
+?>
 
