@@ -185,7 +185,8 @@ $conn = OpenCon();
 
 </html>
 
-
+<!-- Login Code -->
+<!-- ****************** -->
 <?php
 if (isset($_POST['username'])) {
     // $connect =mysqli_connect("localhost","id17345460_artificiers","Av@300303318014","id17345460_registration");
@@ -199,7 +200,7 @@ if (isset($_POST['username'])) {
        rollno='$usernm' and paswrd='$passwrd'";
     } else {
         $sql2 = "SELECT * FROM facregist WHERE
-       email='$usernm' and paswrd='$passwrd'";
+       email='$usernm' and pass='$passwrd'";
     }
     $rs = mysqli_query($conn, $sql2);
 
@@ -215,11 +216,20 @@ if (isset($_POST['username'])) {
             $rs3 = mysqli_query($conn, $sql3);
             if($row3 = mysqli_fetch_array($rs3)) {
                 $_SESSION['sessnid'] = $row3[0];
-                echo '<script type="text/javascript">
-                window.location="Modules/Studentdashboard/studash.php";
-             // alert("Worked loghined as student")
-            </script>';
-                $_SESSION['user'] = $usernm;
+                if($role=='stu'){
+                    echo '<script type="text/javascript">
+                    window.location="Modules/Studentdashboard/studash.php";
+                 // alert("Worked loghined as student")
+                </script>';
+                    $_SESSION['user'] = $usernm;
+                }else{
+                    echo '<script type="text/javascript">
+                    window.location="Modules/Facultydashboard/facdash.php";
+                 // alert("Worked loghined as student")
+                </script>';
+                    $_SESSION['user'] = $usernm;
+
+                }
             }
         }
     } else {
