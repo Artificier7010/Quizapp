@@ -1,6 +1,12 @@
 <?php
 include '../../db_conn.php';
 session_start();
+if(isset($_SESSION['sessnid'])==false){
+    echo '<script type="text/JavaScript"> 
+              window.location="../../Index.php";
+              alert("login failed");
+              </script>';
+  }
 $conn = OpenCon();
 
 $fetched = $_SESSION['sessnid'];
@@ -10,8 +16,11 @@ $cllg = "";
 $email = "";
 $role = "";
 $roletoshow = "";
-$phpvar="360"; 
+$phpvar="120";
 
+
+
+// Session Check
 
 // Fetching User Details
 
@@ -163,20 +172,6 @@ if ($row1 = mysqli_fetch_array($rs1)) {
                 qid = 1;
             });
 
-
-
-            // $(".x").click(function() {
-            //     let x = $(this).val();
-            //     qid = x;
-
-            //     $.post("question.php", {
-            //         k: x
-            //     }, function(data) {
-
-            //         $(".dyquestion").html(data);
-            //     });
-            // })
-
             // next button
             $("#btnnext").click(function() {
                 qid++;
@@ -272,3 +267,9 @@ if ($row1 = mysqli_fetch_array($rs1)) {
 </body>
 
 </html>
+
+<?php
+
+
+
+ ?>
