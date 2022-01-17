@@ -1,0 +1,266 @@
+html,body{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+ul {
+    position: relative;
+    display: flex;
+    padding: 15px 5px;
+    background: rgb(99 99 100 / 30%);
+    border-radius: 35px;
+    z-index: 2;
+  }
+  ul li {
+    position: relative;
+    list-style: none;
+    cursor: pointer;
+    width: 70px;
+    text-align: center;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  ul li:not(.active):hover {
+    transform: translateY(-4px);
+  }
+  
+  ul li::before {
+    font-size: 0.7rem;
+    color: black;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.1s;
+  }
+  ul li:nth-child(1)::before {
+    content: "Home";
+  }
+  ul li:nth-child(2)::before {
+    content: "About";
+  }
+  ul li:nth-child(3)::before {
+    content: "Contacts";
+  }
+  ul li:nth-child(4)::before {
+    content: "Profile";
+  }
+  ul li.active::before {
+    opacity: 1;
+    bottom: -5px;
+  }
+  ul li i {
+    font-size: 20px;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  ul li.active i {
+    color: white;
+  }
+  
+  ul .indicator {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: black;
+    position: absolute;
+    top: -18px;
+    left: 15px;
+    z-index: -1;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 3px solid white;
+  }
+  ul .indicator::before {
+    content: "";
+    position: absolute;
+    top: 32%;
+    left: -45%;
+    width: 15px;
+    height: 15px;
+    border-top-right-radius: 15px;
+    box-shadow: 0px -7px 0 0 white;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: -2;
+  }
+  ul .indicator::after {
+    content: "";
+    position: absolute;
+    top: 32%;
+    right: -45%;
+    width: 15px;
+    height: 15px;
+    border-top-left-radius: 25px;
+    box-shadow: 0px -7px 0 0 white;
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: -2;
+  }
+  
+  ul li.active:nth-child(1) ~ .indicator::before {
+    border-top-right-radius: 0px;
+  }
+  
+  ul li.active:nth-child(4) ~ .indicator::after {
+    border-top-left-radius: 0px;
+  }
+  
+  ul li.active i {
+    transform: translateY(-20px);
+  }
+  
+  ul li:nth-child(1).active ~ .indicator {
+    transform: translateX(calc(70px * 0));
+  }
+  ul li:nth-child(2).active ~ .indicator {
+    transform: translateX(calc(70px * 1));
+  }
+  ul li:nth-child(3).active ~ .indicator {
+    transform: translateX(calc(70px * 2));
+  }
+  ul li:nth-child(4).active ~ .indicator {
+    transform: translateX(calc(70px * 3));
+  }
+
+
+
+
+
+  /* Studash Styling */
+  .custm-nav{
+    margin: 20px;
+  }
+
+
+
+  /* Table Styling */
+
+  table {
+    width: 100%;
+    border-spacing: 0;
+    border-radius: 1em;
+    overflow: hidden;
+  }
+  
+  thead {
+    visibility: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+  
+  th {
+    background: rgb(116 116 116);
+    color: #fff;
+  }
+  
+  td:nth-child(1) {
+    background: rgb(116 116 116);
+    color: #fff;
+    border-radius: 1em 1em 0 0;
+  }
+  
+  th,
+  td {
+    padding: 1em;
+  }
+  
+  tr,
+  td {
+    display: block;
+  }
+  
+  td {
+    position: relative;
+  }
+  
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    padding-left: 1em;
+    font-weight: 600;
+    font-size: .9em;
+    text-transform: uppercase;
+  }
+  
+  tr {
+    margin-bottom: 1.5em;
+    border: 1px solid #ddd;
+    border-radius: 1em;
+    text-align: right;
+  }
+  
+  tr:last-of-type {
+    margin-bottom: 0;
+  }
+  
+  td:nth-child(n+2):nth-child(odd) {
+    background-color: #bbbbbb;
+  }
+
+
+
+  /* Button styling */
+  .strtbtn{
+    width: 100px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 24px;
+    background: #99ff99;
+  }
+
+
+
+
+
+  /* Table Media Screen */
+@media only screen and (min-width: 768px) {
+
+  table {
+    max-width: 1200px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+  }
+
+  thead {
+    visibility: visible;
+    position: relative;
+  }
+
+  th {
+    text-align: left;
+    text-transform: uppercase;
+    font-size: .9em;
+  }
+
+  tr {
+    display: table-row;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+  }
+
+  tr:nth-child(even) {
+    background-color: #e0e0e0;
+  }
+
+  td {
+    display: table-cell;
+  }
+
+  td::before {
+    content: none;
+  }
+
+  td:nth-child(1) {
+    background: transparent;
+    color: #444;
+    border-radius: 0;
+  }
+
+  td:nth-child(n+2):nth-child(odd) {
+    background-color: transparent;
+  }
+
+
+}

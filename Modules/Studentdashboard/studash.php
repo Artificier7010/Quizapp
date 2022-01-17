@@ -1,275 +1,131 @@
 <?php
 include '../../db_conn.php';
 session_start();
-if(isset($_SESSION['sessnid'])==false){
-    echo '<script type="text/JavaScript"> 
-              window.location="../../Index.php";
-              alert("login failed");
-              </script>';
-  }
 $conn = OpenCon();
 
-$fetched = $_SESSION['sessnid'];
-$username = $_SESSION['user'];
+// Available Quizes
+// ***************
 
-$cllg = "";
-$email = "";
-$role = "";
-$roletoshow = "";
-$phpvar="120";
-
-
-
-// Session Check
-
-// Fetching User Details
-
-$sql1 = "SELECT * FROM register WHERE rollno='$username'";
-$rs1 = mysqli_query($conn, $sql1);
-if ($row1 = mysqli_fetch_array($rs1)) {
-    $cllg = $row1['college'];
-    $email = $row1['email'];
-    $role = $row1['role'];
-    if ($role == 'stu') {
-        $roletoshow = "Student";
-    } else {
-        $roletoshow = "N/A";
-    }
-}
+$sql1 = "SELECT * FROM quizes";
+$rs = mysqli_query($conn, $sql1);
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="student.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
-    <title>Document</title>
-
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="studash.css">
+  <title>Document</title>
 </head>
 
 <body>
-    <div class="main">
-        <div class="left">
-            <div class="header">
-                <h1 style="color:aliceblue">HTML</h1>
-                <div class="user-details">
-                    <h2> <?php echo $username ?> </h2>
-                    <div class="card">
-                        <button id="userbtn"><i class="fas fa-user-check"></i></button>
-                        <div class="innercard">
-                            <div class="inner-row">
-                                <h3>Username:- <?php echo $username ?></h3>
-                            </div>
-                            <div class="inner-row">
-                                <h3>College:- <?php echo $cllg ?></h3>
-                            </div>
-                            <div class="inner-row">
-                                <h3>Email:- <?php echo $email ?></h3>
-                            </div>
-                            <div class="inner-row">
-                                <h3>Role:- <?php echo $roletoshow ?></h3>
-                            </div>
+  <div class="custm-nav">
+    <ul>
+      <li class="active"><i class="fas fa-home"></i></li>
+      <li><i class="fas fa-info"></i></li>
+      <li><i class="far fa-address-card"></i></li>
+      <li><i class="fas fa-user"></i></li>
+      <div class="indicator"></div>
+    </ul>
+  </div>
+  <div class="bel-block container">
 
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="dyquestion" id="dyquestion"></div>
-            <div class="btns">
-                <button id="btnpre"><i class="fas fa-backward"></i>&nbsp; Previous</button>
-                <button id="sub"><i class="fas fa-check"></i>&nbsp;Submit</button>
-                <button id="finish">Finish Exam</button>
-                <button id="btnnext"><i class="fas fa-forward"></i>&nbsp;Next</button>
-
-            </div>
-            <div class="foot">
-                  <div id="status"style="font-size:30px;color:white;"></div>
-
-            </div>
-        </div>
-        <!-- <div class="right">
-            <div class="upper">
-                <div class="details">
-                    <h2>Username:-
-                    </h2>
-                    <h2>Email:-
-                    </h2>
-                    <h2>Subject:-HTML</h2>
-                    <h2>Date:-2/01/2022</h2>
-                </div>
-                <div class="btns">
-                    <button id="btnpre">Previous</button>
-                    <button id="btnnext">Next</button>
-                </div>
-
-            </div>
-
-            <div class="midd">
-                <div class="btns-cont">
-                    <div class="row">
-                        <button value="1" class="x">Q.1</button>
-                        <button value="2" class="x">Q.2</button>
-                        <button value="3" class="x">Q.3</button>
-                    </div>
-                    <div class="row">
-                        <button value="4" class="x">Q.4</button>
-                        <button value="5" class="x">Q.5</button>
-                        <button value="6" class="x">Q.6</button>
-
-                    </div>
-                    <div class="row">
-                        <button value="7" class="x">Q.7</button>
-                        <button value="8" class="x">Q.8</button>
-                        <button value="9" class="x">Q.9</button>
-                    </div>
-                    <div class="row">
-                        <button value="10" class="x">Q.10</button>
-                    </div>
-                </div>
-
-            </div>
-            <div class="lower">
-                <div class="lower-btns">
-                    <button id="sub">Submit</button>
-                    <button id="finish" >Finish Exam</button>
-                </div>
-            </div>
-
-
-        </div> -->
-    </div>
-    <script src="../../jquery-3.6.0.js"></script>
-    <script>
-        $(function() {
-            countDown(<?php echo $phpvar; ?>,"status");
-
-            let qid = 0;
-            $("#finish").hide();
-            $("#btnpre").show();
-            $("#btnnext").show();
-            $("#sub").show();
-            $(".innercard").hide()
-
-            // $(".x").click(()=>{
-            //     alert("cxzvfuhvfudz");
-            // })
-
-            $("#userbtn").click(() => {
-                $(".innercard").toggle();
-            })
-
-
-            $.post("question.php", {
-                k: 1
-            }, function(data) {
-                $(".dyquestion").html(data);
-                qid = 1;
-            });
-
-            // next button
-            $("#btnnext").click(function() {
-                qid++;
-                if (qid <= 10) {
-                    $.post("question.php", {
-                        k: qid
-                    }, function(data) {
-                        $(".dyquestion").html(data);
-                    });
-                }
-            })
-
-            //previous button
-
-            $("#btnpre").click(function() {
-
-                qid--;
-
-                if (qid >= 1) {
-                    $.post("question.php", {
-                        k: qid
-                    }, function(data) {
-
-                        $(".dyquestion").html(data);
-
-                    });
-                }
-            })
-
-            //submit
-
-            $("body").on("click", "#sub", function() {
-                if (qid <= 10) {
-                    if ($("input[type='radio'].radioBtnClass").is(':checked')) {
-                        var card_type = $("input[type='radio'].radioBtnClass:checked").val();
-                        $.post("answer.php", {
-                            ans: card_type,
-                            k: qid
-                        }, function(data) {
-                            alert(data);
-                        });
-                    }
-                } else if (qid > 10) {
-                    $("#finish").show();
-                    $("#btnnext").hide();
-                    $("#btnpre").hide();
-                    $("#sub").hide();
-                }
-                qid++;
-                if (qid <= 10) {
-                    $.post("question.php", {
-                        k: qid
-                    }, function(data) {
-
-                        $(".dyquestion").html(data);
-
-                    });
-                }
-            })
-            $("#finish").click(function() {
-                window.location = "answercheck.php";
-            })
-
-
-
-        })
-    </script>
-
-
-
-    <!-- Timer Code -->
-    <script type="text/javascript">
-        function countDown(secs, elem) {
-
-            var element = document.getElementById(elem);
-
-            element.innerHTML = "Timer: " + secs + " seconds";
-
-            if (secs < 1) {
-
-                clearTimeout(timer);
-                window.location = "answercheck.php";
-
-                element.innerHTML = '<h2>Ended</h2>';
+    <!-- HOME SECTION -->
+    <!-- ******************** -->
+    <div class="home">
+      <h1>AVAILABLE QUIZES</h1>
+      <hr>
+      <br>
+      <table id="customers">
+        <thead>
+          <th>S No.</th>
+          <th>Title</th>
+          <th>Subject</th>
+          <th>Subject Code</th>
+          <th>Action</th>
+        </thead>
+        <tbody>
+          <?php
+          $sno = 1;
+          while ($userrow = mysqli_fetch_array($rs)) {
+            if ($userrow) {
+              echo "<tr>";
+              echo '<td data-label="Id">' . $sno . '</td>';
+              echo '<td data-label="Title">' . $userrow["title"] . '</td>';
+              echo '<td data-label="Subject">' . $userrow["subject"] . '</td>';
+              echo '<td data-label="Subject Code">' . $userrow["subcode"] . '</td>';
+              echo '<td data-label="Action"><button class="strtbtn">START</button></td>';
+              echo "</tr>";
+              $sno++;
+            } else {
+              echo "<tr>";
+              echo '<td colspan="8" style="text-align:center;">No Users</td>';
+              echo "</tr>";
             }
+          }
+          ?>
 
-            secs--;
+        </tbody>
+      </table>
 
-            var timer = setTimeout('countDown(' + secs + ',"' + elem + '")', 1000);
 
-        }
-    </script>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <!-- Script -->
+  <!-- ******************     -->
+
+  <script src="../../jquery-3.6.0.js"></script>
+  <script>
+    $(document).ready(function() {
+
+      let isbtnDis=false;
+      if(isbtnDis==true){
+        $(this).html("Finished")
+        $(this).attr("disabled","true");
+      }
+
+      $(".strtbtn").click(function() {
+        let subCode = $(this).closest('tr').find("td:nth-child(4)").text();
+        isbtnDis=true;
+       
+        window.location.href="../Studentdashboard/stuportal.php";
+        $.post()
+      })
+
+
+    })
+  </script>
+
+  <script type="text/javascript">
+    var nav = document.querySelectorAll("li");
+
+    nav.forEach((li) => {
+      li.addEventListener("click", function() {
+        removeActive();
+        this.classList.add("active");
+      });
+    });
+
+    function removeActive() {
+      nav.forEach((li) => {
+        li.classList.remove("active");
+      });
+    }
+  </script>
+
+
 </body>
 
 </html>
-
-<?php
-
-
-
- ?>
