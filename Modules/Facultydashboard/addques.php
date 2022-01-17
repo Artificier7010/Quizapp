@@ -69,8 +69,6 @@ $subcd = $_SESSION['subcd'];
                         Please provide a valid Answer
                     </div>
                 </div>
-                
-               
                 <button type="submit" id="subaddquiz" class="btn btn-primary">Submit</button>
             </form>
 
