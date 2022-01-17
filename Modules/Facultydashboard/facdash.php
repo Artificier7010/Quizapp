@@ -1,5 +1,6 @@
 <!-- category insertion  -->
 <?php
+session_start();
 include '../../db_conn.php';
 
 // session_start();
@@ -113,7 +114,7 @@ $total = $rownum[0];
       <!-- <li class="profile">
         <div class="profile-details">
           <div class="name_job">
-            <div class="name"><?php echo $facultyname ?></div>
+            <div class="name"></div>
             <div class="job">Faculty</div>
           </div>
         </div>
@@ -441,21 +442,25 @@ if (isset($_POST["qtitle"])) {
 
   $rs3 = mysqli_query($connect, $sql3);
   if ($rs3) {
-    echo "
-    <script type='text/javascript'>
+    $_SESSION['lang'] = $lang;
+    $_SESSION['subjct']=$sub;
+    $_SESSION['subcd']=$subcd;
+    if(isset($_SESSION['lang'])){
+      echo "
+      <script type='text/javascript'>
+      let cnf = confirm('Do you want to add question?');
+      if(cnf==true)
+      {
+        window.location.href= 'addques.php';
+      }else{
+        alert('Quiz Added Successfully!!!!!!');
+      }
+  
+      
+      </script>
+      ";
 
-    let cnf = confirm('Do you want to add question?');
-    if(cnf==true)
-    {
-      window.location.href= 'addques.php';
-      $.post('addques.php',{lang:<?php echo $lang ?>},function(data){})
-    }else{
-      alert('Quiz Added Successfully!!!!!!')
     }
-
-    
-    </script>
-    ";
   }
 }
 
