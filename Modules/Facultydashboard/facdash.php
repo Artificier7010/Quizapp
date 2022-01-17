@@ -183,7 +183,7 @@ $total = $rownum[0];
 
 
 
-    <!-- Question add -->
+    <!--  add quiz-->
     <!-- **************************************** -->
 
     <div class="userresult">
@@ -191,38 +191,84 @@ $total = $rownum[0];
         <h1>Add Quiz</h1>
         <hr>
         <br>
-        <form method="POST">
-          <div class="mb-3">
+        <form method="POST" class="row g-3 needs-validation">
+          <div class="col-md-6">
+            <label for="validationServer03" class="form-label">Quiz Title</label>
+            <input type="text" class="form-control is-invalid" id="validationServer03" name="qtitle" aria-describedby="validationServer03Feedback" placeholder="Quiz Title" required>
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              Please provide a valid Quiz title
+            </div>
+          </div>
+          <!-- <div class="mb-3">
             <label for="qtitle" class="form-label">Quiz Title</label>
             <input type="text" name="qtitle" class="form-control" id="qtitle" placeholder="Quiz Title">
+          </div> -->
+          <div class="col-md-6">
+            <label for="validationServer03" class="form-label">Number of question</label>
+            <input type="number" class="form-control is-invalid" id="validationServer03" name="noq" aria-describedby="validationServer03Feedback" placeholder="Eg: 10" required>
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              Please provide a valid data
+            </div>
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="noq" class="form-label">Number of question</label>
             <input type="number" name="noq" class="form-control" id="noq" placeholder="Eg: 10">
+          </div> -->
+          <div class="col-md-6">
+            <label for="validationServer04" class="form-label">Language</label>
+            <select name="lang" class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+            <option disabled selected>Select</option>
+              <option value="eng">English</option>
+              <option value="hin">Hindi</option>
+            </select>
+            <div id="validationServer04Feedback" class="invalid-feedback">
+              Please select a valid language.
+            </div>
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="lang" class="form-label">Language</label>
             <select name="lang" id="lang" class="form-select" aria-label="Language">
               <option disabled selected>Select</option>
               <option value="eng">English</option>
               <option value="hin">Hindi</option>
             </select>
+          </div> -->
+          <div class="col-md-6">
+            <label for="validationServer03" class="form-label">Subject</label>
+            <input type="text" class="form-control is-invalid" id="validationServer03" name="sub" aria-describedby="validationServer03Feedback" placeholder="html" required>
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              Please provide a valid subject
+            </div>
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="sub" class="form-label">Subject</label>
             <input type="text" name="sub" class="form-control" id="sub" placeholder="Eg: Java">
+          </div> -->
+          <div class="col-md-6">
+            <label for="validationServer03" class="form-label">Subject Code</label>
+            <input type="text" name="subcd" class="form-control is-invalid" id="validationServer03" name="sub" aria-describedby="validationServer03Feedback" placeholder="html" required>
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              Please provide a valid subject code
+            </div>
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="subcd" class="form-label">Subject Code</label>
             <input type="text" name="subcd" class="form-control" id="subcd" placeholder="Eg: Java01">
+          </div> -->
+          <div class="col-md-6">
+            <label for="validationServer03" class="form-label">time</label>
+            <input type="number" name="timedur" class="form-control is-invalid" id="validationServer03" name="sub" aria-describedby="validationServer03Feedback" placeholder="html" required>
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              Please provide a valid time in second
+            </div>
           </div>
-          <div class="mb-3">
+          <!-- <div class="mb-3">
             <label for="timedur" class="form-label">Time Duration(In seconds)</label>
             <input type="number" name="timedur" class="form-control" id="timedur" placeholder="Eg: 360">
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          </div> -->
+          <button type="submit" id="subaddquiz" class="btn btn-primary">Submit</button>
         </form>
-    
+
 
       </div>
     </div>
@@ -264,6 +310,8 @@ $total = $rownum[0];
 
       $(".userdetail").show();
       $(".userresult").hide();
+      $(".schedule").hide();
+
 
 
 
@@ -324,6 +372,8 @@ $total = $rownum[0];
 
 
 
+
+
       // Deleting User Details
       // ***************************
 
@@ -344,6 +394,28 @@ $total = $rownum[0];
     });
 
     //
+
+    $("#subaddquiz").click((function() {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+          .forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          })
+      })()
+
+    );
   </script>
 
 
@@ -351,16 +423,15 @@ $total = $rownum[0];
 
 </html>
 
-                   <!-- Add quiz  -->
+<!-- Add quiz  -->
 <!-- ******************************************** -->
 
 <?php
 
-if(isset($_POST["qtitle"]))
-{
+if (isset($_POST["qtitle"])) {
   $qtitle = $_POST["qtitle"];
   $noq = $_POST["noq"];
-  $lang = filter_input(INPUT_POST, "lang" , FILTER_SANITIZE_STRING);
+  $lang = filter_input(INPUT_POST, "lang", FILTER_SANITIZE_STRING);
   $sub = $_POST["sub"];
   $subcd = $_POST["subcd"];
   $timedur = $_POST["timedur"];
@@ -368,9 +439,8 @@ if(isset($_POST["qtitle"]))
 
   $sql3 = "INSERT INTO quizes VALUES( NULL , '$qtitle', '$noq','$lang',' $sub',' $subcd','$timedur')";
 
-  $rs3 = mysqli_query($connect , $sql3);
-  if($rs3)
-  {
+  $rs3 = mysqli_query($connect, $sql3);
+  if ($rs3) {
     echo "
     <script type='text/javascript'>
 
@@ -378,6 +448,7 @@ if(isset($_POST["qtitle"]))
     if(cnf==true)
     {
       window.location.href= 'addques.php';
+      $.post('addques.php',{lang:<?php echo $lang ?>},function(data){})
     }else{
       alert('Quiz Added Successfully!!!!!!')
     }
@@ -385,10 +456,7 @@ if(isset($_POST["qtitle"]))
     
     </script>
     ";
-
   }
-
 }
 
 ?>
-
