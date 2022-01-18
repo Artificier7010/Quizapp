@@ -33,6 +33,10 @@ $sql2 = "SELECT * FROM register ";
 
 $anss = mysqli_query($connect, $sql2);
 
+
+$sql5 = "SELECT * FROM quizes";
+$rs4= mysqli_query($connect, $sql5);
+
 ?>
 
 <!-- No. of Users -->
@@ -100,17 +104,17 @@ $total = $rownum[0];
       <li>
         <a id="rslt" href="#">
           <i class='bx bx-chat'></i>
-          <span class="links_name">Question Add</span>
+          <span class="links_name">Add Quiz</span>
         </a>
-        <span class="tooltip">Question Add</span>
+        <span class="tooltip">Add Quiz</span>
       </li>
-      <!-- <li>
+      <li>
         <a id="shedul" href="#">
           <i class='bx bx-pie-chart-alt-2'></i>
-          <span class="links_name">Schedule</span>
+          <span class="links_name">Quiz Manage</span>
         </a>
-        <span class="tooltip">Schedule</span>
-      </li> -->
+        <span class="tooltip">Quiz Manage</span>
+      </li>
       <!-- <li class="profile">
         <div class="profile-details">
           <div class="name_job">
@@ -218,7 +222,7 @@ $total = $rownum[0];
           <div class="col-md-6">
             <label for="validationServer04" class="form-label">Language</label>
             <select name="lang" class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
-            <option disabled selected>Select</option>
+              <option disabled selected>Select</option>
               <option value="eng">English</option>
               <option value="hin">Hindi</option>
             </select>
@@ -269,10 +273,61 @@ $total = $rownum[0];
           </div> -->
           <button type="submit" id="subaddquiz" class="btn btn-primary">Submit</button>
         </form>
+      </div>
+    </div>
+
+
+
+    <!-- quiz  manage -->
+    <!-- ********************************** -->
+    <div class="schedule">
+      <div class="container home">
+
+        <h1>AVAILABLE QUIZES</h1>
+        <hr>
+        <br>
+        <table id="customers">
+          <thead>
+            <th>S No.</th>
+            <th>Title</th>
+            <th>Subject</th>
+            <th>Subject Code</th>
+            <th>Action</th>
+          </thead>
+          <tbody>
+            <?php
+            $sno = 1;
+            while ($userrow = mysqli_fetch_array($rs4)) {
+              if ($userrow) {
+                echo "<tr>";
+                echo '<td data-label="Id">' . $sno . '</td>';
+                echo '<td data-label="Title">' . $userrow["title"] . '</td>';
+                echo '<td data-label="Subject">' . $userrow["subject"] . '</td>';
+                echo '<td data-label="Subject Code">' . $userrow["subcode"] . '</td>';
+                echo '<td data-label="Action"><button class="strtbtn">START</button></td>';
+                echo "</tr>";
+                $sno++;
+              } else {
+                echo "<tr>";
+                echo '<td colspan="8" style="text-align:center;">No Users</td>';
+                echo "</tr>";
+              }
+            }
+            ?>
+
+          </tbody>
+        </table>
+
 
 
       </div>
     </div>
+
+
+
+
+
+
 
 
 
@@ -443,9 +498,9 @@ if (isset($_POST["qtitle"])) {
   $rs3 = mysqli_query($connect, $sql3);
   if ($rs3) {
     $_SESSION['lang'] = $lang;
-    $_SESSION['subjct']=$sub;
-    $_SESSION['subcd']=$subcd;
-    if(isset($_SESSION['lang'])){
+    $_SESSION['subjct'] = $sub;
+    $_SESSION['subcd'] = $subcd;
+    if (isset($_SESSION['lang'])) {
       echo "
       <script type='text/javascript'>
       let cnf = confirm('Do you want to add question?');
@@ -459,9 +514,9 @@ if (isset($_POST["qtitle"])) {
       
       </script>
       ";
-
     }
   }
 }
+
 
 ?>

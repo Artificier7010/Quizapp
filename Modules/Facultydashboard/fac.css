@@ -694,6 +694,15 @@ td:nth-child(n+2):nth-child(odd) {
 }
 
 
+  /* Button styling */
+  .strtbtn{
+    width: 100px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 24px;
+    background: #99ff99;
+  }
+
 
 /* Result Analytics Section */
 
